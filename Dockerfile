@@ -6,11 +6,14 @@ maintainer Sebastien Binet <binet@cern.ch>
 
 user root
 
+env GOVERS 1.7
+
 # install Go
 run apt-get update -y && \
 	apt-get install -y curl git pkg-config libzmq-dev build-essential && \
-	curl -O -L https://golang.org/dl/go1.7.linux-amd64.tar.gz && \
-	tar -C /usr/local -zxf /home/main/go1.7.linux-amd64.tar.gz
+	curl -O -L https://golang.org/dl/go${GOVERS}.linux-amd64.tar.gz && \
+	tar -C /usr/local -zxf go${GOVERS}.linux-amd64.tar.gz && \
+	/bin/rm go${GOVERS}.linux-amd64.tar.gz
 
 user main
 
@@ -25,7 +28,9 @@ run mkdir -p $HOME/.ipython/kernels && \
 	cp -r $GOPATH/src/github.com/gopherds/gophernotes/kernel $HOME/.ipython/kernels/gophernotes
 copy ./kernel.json $HOME/.ipython/kernels/gophernotes/.
 
+run mkdir -p $HOME/notebooks
+copy index.ipynb $HOME/notebooks
+copy examples $HOME/notebooks/.
 
-# add an example
-run mkdir $HOME/notebooks
-copy ./notebooks/* notebooks/.
+user root
+run chown -R main:main /home/main/notebooks

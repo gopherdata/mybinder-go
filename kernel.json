@@ -3,7 +3,7 @@
         "/home/main/gopath/bin/gophernotes", 
         "{connection_file}"
         ],
-    "display_name": "Go",
+    "display_name": "Golang",
     "language": "go",
     "name": "go"
 }
