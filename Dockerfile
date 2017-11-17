@@ -6,7 +6,7 @@ maintainer Sebastien Binet <binet@cern.ch>
 
 user root
 
-env GOVERS 1.7
+env GOVERS 1.9.2
 
 # install Go
 run apt-get update -y && \
