@@ -10,7 +10,7 @@ env GOVERS 1.9.2
 
 # install Go
 run apt-get update -y && \
-	apt-get install -y curl git pkg-config libzmq-dev build-essential && \
+	apt-get install -y curl git pkg-config libzmq3-dev build-essential && \
 	curl -O -L https://golang.org/dl/go${GOVERS}.linux-amd64.tar.gz && \
 	tar -C /usr/local -zxf go${GOVERS}.linux-amd64.tar.gz && \
 	/bin/rm go${GOVERS}.linux-amd64.tar.gz
@@ -21,11 +21,11 @@ env GOPATH $HOME/gopath
 env PATH $GOPATH/bin:/usr/local/go/bin:$PATH
 
 run go get golang.org/x/tools/cmd/goimports && \
-	go get github.com/gopherds/gophernotes
+	go get github.com/gopherdata/gophernotes
 
 # install the Go kernel
-run mkdir -p $HOME/.ipython/kernels && \
-	cp -r $GOPATH/src/github.com/gopherds/gophernotes/kernel $HOME/.ipython/kernels/gophernotes
+run mkdir -p $HOME/.local/share/jupyter/kernels/gophernotes && \
+	cp -r $GOPATH/src/github.com/gopherdata/gophernotes/kernel/* $HOME/.local/share/jupyter/kernels/gophernotes
 copy ./kernel.json $HOME/.ipython/kernels/gophernotes/.
 
 run mkdir -p $HOME/notebooks
