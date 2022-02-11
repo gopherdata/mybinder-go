@@ -2,7 +2,7 @@
 
 set -e
 
-GOVERS=1.11
+GOVERS=1.17.6
 
 mkdir -p \
 	$HOME/.local/go/$GOVERS \
@@ -15,18 +15,35 @@ tar -C $HOME/.local/go/$GOVERS -zxf go${GOVERS}.linux-amd64.tar.gz
 
 export GOROOT=$HOME/.local/go/$GOVERS/go
 export GOPATH=$HOME/go
+export GO111MODULE=on
 export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 
 ## install interesting packages
 echo "::: installing gophernotes, gonum..."
 go get golang.org/x/tools/cmd/goimports
-go get -v github.com/gopherdata/gophernotes
-go get gonum.org/v1/gonum/...
-go get gonum.org/v1/plot/...
-go get github.com/kniren/gota/dataframe
-go get github.com/sajari/regression
+go install github.com/gopherdata/gophernotes@latest
 go get github.com/goml/gobrain
+
+go get gonum.org/v1/plot/...
+go get gonum.org/v1/gonum/...
+go get github.com/go-gota/gota/...
+go get github.com/sajari/regression
 go get github.com/sjwhitworth/golearn/...
+go get go-hep.org/x/hep/csvutil/...
+go get go-hep.org/x/hep/fit
+go get go-hep.org/x/hep/hbook
+go get github.com/montanaflynn/stats
+go get github.com/boltdb/bolt
+go get github.com/patrickmn/go-cache
+go get github.com/chewxy/math32
+go get github.com/chewxy/hm
+go get gorgonia.org/vecf64
+go get gorgonia.org/vecf32
+go get github.com/awalterschulze/gographviz
+go get github.com/leesper/go_rng
+go get github.com/pkg/errors
+go get github.com/stretchr/testify/assert
+
 echo "::: installing gophernotes, gonum... [done]"
 
 ## setup environment for Go
@@ -35,6 +52,7 @@ cat >> $HOME/.setup-go << EOF
 ## setup Go
 export GOROOT=$GOROOT
 export GOPATH=$GOPATH
+export GO111MODULE=on
 export PATH=\$GOPATH/bin:\$GOROOT/bin:\$PATH
 EOF
 
@@ -56,6 +74,7 @@ cat >| ./binder/gophernotes/kernel.json << EOF
     "env": {
         "GOPATH": "$GOPATH",
         "GOROOT": "$GOROOT",
+        "GO111MODULE": "on",
         "PATH":   "$GOPATH/bin:$GOROOT/bin:$PATH"
 	}
 }
